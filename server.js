@@ -1,20 +1,47 @@
 const fs = require('fs');
 
-let temps = [21, 5, 23, 3, 9, 21, 23, 54, 76, 12, 5, 23];
+function addReservation(resList, res) {
+    resList.push(res);
+}
 
-temps.push(99);
+function updateReservation(resList, res) {
+    let found = resList.find((elt) => elt.name === res.name);
+    if (found) {
+        found.time = res.time;
+        found.num = res.num;
+    }
+}
 
-temps.splice(1, 3, 888, 999);
+function deleteReservation(resList, name) {
+    let foundIndex = resList.findIndex((elt) => elt.name === name);
+    if (foundIndex >= 0) {
+        resList.splice(foundIndex, 1);
+    }
+}
 
-// temps.sort((a, b) => {
-//     return a - b;
+function listReservations(resList) {
+    resList.forEach((elt) => {
+        console.log(`Name: ${elt.name}, Num: ${elt.num}, Time: ${elt.time}`);
+    });
+}
 
-// });
+function viewReservation(resList, name) {
+    let found = resList.find((elt) => elt.name === name);
+    if (found) {
+        console.log(`Name: ${found.name}, Num: ${found.num}, Time: ${found.time}`);
+    }
+}
 
-console.log(temps);
+function addUserName(resList, name) {
+    let found = resList.find((elt) => elt.name === name);
+    if (!found) {
+        resList.push({name: name, time: '', num: 0});
+    }
+}
 
 let reservation = {
     name: 'Smith',
+    day: 'Monday',
     time: '0900',
     num: 4
 

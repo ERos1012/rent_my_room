@@ -1,4 +1,47 @@
-const fs = require('fs');
+const http = require("http");
+const fs = require("fs");
+const hostname = "127.0.0.1";
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+    const { method, url } = req;
+    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    if (method === "GET" && url === "/add_reservation") {
+        res.statusCode = 200;
+        addReservation(resList, reservation);
+        res.end("Add reservation");
+    } else if (method === "GET" && url === "/update_reservation") {
+        res.statusCode = 200;
+        updateReservation(resList, reservation);
+        res.end("Update reservation");
+    }
+    else if (method === "GET" && url === "/delete_reservation") {
+        res.statusCode = 200;
+        deleteReservation(resList, reservation.name);
+        res.end("Delete reservation");
+    }
+    else if (method === "GET" && url === "/list_reservations") {
+        res.statusCode = 200;
+        listReservations(resList);
+        res.end("List reservations");
+    }
+    else if (method === "GET" && url === "/view_reservation") {
+        res.statusCode = 200;
+        viewReservation(resList, reservation.name);
+        res.end("View reservation");
+    }
+    else if (method === "GET" && url === "/add_user_name") {
+        res.statusCode = 200;
+        addUserName(resList, reservation.name);
+        res.end("Add user name");
+    }
+    else {
+        res.statusCode = 404;
+        res.end("Not found");
+    }
+});
 
 function addReservation(resList, res) {
     resList.push(res);
@@ -94,3 +137,9 @@ fs.writeFile('resList1.json', JSON.stringify(resList), err => {
     console.log('Saved file');
 
 });
+
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
+  

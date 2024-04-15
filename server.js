@@ -1,17 +1,5 @@
 const fs = require('fs');
-
-let temps = [21, 5, 23, 3, 9, 21, 23, 54, 76, 12, 5, 23];
-
-temps.push(99);
-
-temps.splice(1, 3, 888, 999);
-
-// temps.sort((a, b) => {
-//     return a - b;
-
-// });
-
-console.log(temps);
+const express = require('express');
 
 let reservation = {
     name: 'Smith',

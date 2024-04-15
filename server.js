@@ -1,17 +1,86 @@
-const fs = require('fs');
+const http = require("http");
+const fs = require("fs");
+const hostname = "127.0.0.1";
+const port = 3000;
 
-let temps = [21, 5, 23, 3, 9, 21, 23, 54, 76, 12, 5, 23];
+const server = http.createServer((req, res) => {
+    const { method, url } = req;
+    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
-temps.push(99);
+    if (method === "GET" && url === "/add_reservation") {
+        res.statusCode = 200;
+        addReservation(resList, reservation);
+        res.end("Add reservation");
+    } else if (method === "GET" && url === "/update_reservation") {
+        res.statusCode = 200;
+        updateReservation(resList, reservation);
+        res.end("Update reservation");
+    }
+    else if (method === "GET" && url === "/delete_reservation") {
+        res.statusCode = 200;
+        deleteReservation(resList, reservation.name);
+        res.end("Delete reservation");
+    }
+    else if (method === "GET" && url === "/list_reservations") {
+        res.statusCode = 200;
+        listReservations(resList);
+        res.end("List reservations");
+    }
+    else if (method === "GET" && url === "/view_reservation") {
+        res.statusCode = 200;
+        viewReservation(resList, reservation.name);
+        res.end("View reservation");
+    }
+    else if (method === "GET" && url === "/add_user_name") {
+        res.statusCode = 200;
+        addUserName(resList, reservation.name);
+        res.end("Add user name");
+    }
+    else {
+        res.statusCode = 404;
+        res.end("Not found");
+    }
+});
 
-temps.splice(1, 3, 888, 999);
+function addReservation(resList, res) {
+    resList.push(res);
+}
 
-// temps.sort((a, b) => {
-//     return a - b;
+function updateReservation(resList, res) {
+    let found = resList.find((elt) => elt.name === res.name);
+    if (found) {
+        found.time = res.time;
+        found.num = res.num;
+    }
+}
 
-// });
+function deleteReservation(resList, name) {
+    let foundIndex = resList.findIndex((elt) => elt.name === name);
+    if (foundIndex >= 0) {
+        resList.splice(foundIndex, 1);
+    }
+}
 
-console.log(temps);
+function listReservations(resList) {
+    resList.forEach((elt) => {
+        console.log(`Name: ${elt.name}, Num: ${elt.num}, Time: ${elt.time}`);
+    });
+}
+
+function viewReservation(resList, name) {
+    let found = resList.find((elt) => elt.name === name);
+    if (found) {
+        console.log(`Name: ${found.name}, Num: ${found.num}, Time: ${found.time}`);
+    }
+}
+
+function addUserName(resList, name) {
+    let found = resList.find((elt) => elt.name === name);
+    if (!found) {
+        resList.push({name: name, time: '', num: 0});
+    }
+}
 
 let reservation = {
     name: 'Smith',

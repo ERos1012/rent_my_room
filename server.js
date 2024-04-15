@@ -1,8 +1,21 @@
 const fs = require('fs');
-const express = require('express');
+
+let temps = [21, 5, 23, 3, 9, 21, 23, 54, 76, 12, 5, 23];
+
+temps.push(99);
+
+temps.splice(1, 3, 888, 999);
+
+// temps.sort((a, b) => {
+//     return a - b;
+
+// });
+
+console.log(temps);
 
 let reservation = {
     name: 'Smith',
+    day: 'Monday',
     time: '0900',
     num: 4
 
@@ -55,3 +68,9 @@ fs.writeFile('resList1.json', JSON.stringify(resList), err => {
     console.log('Saved file');
 
 });
+
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
+  
